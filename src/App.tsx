@@ -19,6 +19,10 @@ import FoodIndex from './components/food/FoodIndex';
 import EditFood from './components/food/EditFood';
 
 
+import { BranchIndex } from './components/branches/BranchIndex';
+import { CreateBranch } from './components/branches/CreateBranch';
+import { EditBranch } from './components/branches/EditBranch';
+import { DeleteBranch } from './components/branches/DeleteBranch'
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -37,7 +41,7 @@ function App() {
     <div>
       {isAdmin ? <AdminNavbar /> : <Navbar />}
       <Routes>
-        <Route path='/' element={<Header />} />
+        <Route path='/home' element={<Header />} />
         <Route path="/booking" element={<BookingIndex />} />
         <Route path="/employees" element={<EmployeeIndex />} />
         <Route path="employees/create" element={<CreateEmployee />} />
@@ -49,6 +53,12 @@ function App() {
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/schedule/edit/:id" element={<EditShcedule />} />
         <Route path="/schedule/create" element={<CreateSchedule />} />
+        <Route path="/branches" element={<BranchIndex />} />
+        <Route path="branches/create" element={<CreateBranch />} />
+        <Route path="branches/edit/:id" element={<EditBranch />} />
+        <Route path="branches/delete" element={<DeleteBranch />} />
+        
+
       </Routes>
       <Footer />
     </div>

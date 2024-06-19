@@ -66,5 +66,15 @@
       "name": "Cơm lam"
     }
   ],
-  "employees": []
+  "employees": [],
+  "branches": [
+    {
+      "id": "bfb5",
+      "br_id": "231",
+      "manager": "3123123",
+      "supplier": "12312",
+      "phone_number": "312321",
+      "address": "31"
+    }
+  ]
 }

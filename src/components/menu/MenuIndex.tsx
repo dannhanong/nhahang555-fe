@@ -1,8 +1,11 @@
 import axios from 'axios';
 import { on } from 'events';
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
 
 const MenuIndex = () => {
+    const location = useLocation();
+
     type Category = {
         id: number;
         name: string;
