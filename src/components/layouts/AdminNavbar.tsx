@@ -4,7 +4,8 @@ import { Link, useLocation } from 'react-router-dom'
 const AdminNavbar = () => {
     const location = useLocation();
     const employeeActive = location.pathname.startsWith('/employees');
-    const foodActive = location.pathname.startsWith('/foods');   
+    const foodActive = location.pathname.startsWith('/foods'); 
+    const branchActive = location.pathname.startsWith('/branches');    
 
   return (
     <div className="container-xxl position-relative p-0">
@@ -20,7 +21,8 @@ const AdminNavbar = () => {
                         <Link to="/home" className="nav-item nav-link">Trang chủ</Link>
 
 
-                        <Link to="employees" className={`nav-item nav-link ${employeeActive ? 'active' : ''}`}>Nhân viên</Link>
+                        <Link to="/employees" className={`nav-item nav-link ${employeeActive ? 'active' : ''}`}>Nhân viên</Link>
+                        <Link to="/branches" className={`nav-item nav-link ${branchActive ? 'active' : ''}`}>Chi nhánh</Link>
                         {/* <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Khu vực</a>
                             <div className="dropdown-menu m-0">

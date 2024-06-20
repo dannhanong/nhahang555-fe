@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 const Navbar = () => {
     const location = useLocation();
     const homeActive = location.pathname.startsWith('/home');
-    const menuActive = location.pathname.startsWith('/menu');       
+    const menuActive = location.pathname.startsWith('/menu');     
 
   return (
     <div className="container-xxl position-relative p-0">

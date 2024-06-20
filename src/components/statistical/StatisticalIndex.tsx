@@ -10,11 +10,11 @@ const StatisticalIndex: React.FC = () => {
 
   return (
     <div>
-      <Bar
+      {/* <Bar
         options={}
         data={}
         {...props}
-        />
+        /> */}
     </div>
   )
 }

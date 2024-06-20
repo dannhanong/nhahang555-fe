@@ -25,9 +25,7 @@ const EditFood = () => {
     const [categories, setCategories] = React.useState<Category[]>([]);
 
     const getFood = async () => {
-        const result = await axios.get(`http://localhost:5000/foods/${id}`);
-        console.log(result.data);
-        
+        const result = await axios.get(`http://localhost:5000/foods/${id}`);        
         setFood(result.data);
     }
 

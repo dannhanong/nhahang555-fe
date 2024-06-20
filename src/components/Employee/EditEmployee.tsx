@@ -1,48 +1,54 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const EditEmployee = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [employee, setEmployee] = useState<any>(null);
-
-  useEffect(() => {
-    if (id) {
-      // Simulate fetching employee data by ID from an API or a data source
-      const fetchEmployee = (id: string) => {
-        const employees = [
-          { id: 1, name: 'Nguyễn Văn A', gender: 'Nam', employeeId: 'A2451', startDate: '01/01/2024', birthDate: '12/03/2003', hometown: 'Cầu Giấy, Hà Nội', phoneNumber: '0987664413' },
-          { id: 2, name: 'Trần Thị B', gender: 'Nữ', employeeId: 'B1234', startDate: '01/01/2024', birthDate: '12/03/2000', hometown: 'Hai Bà Trưng, Hà Nội', phoneNumber: '0123456789' }
-        ];
-        return employees.find(emp => emp.id.toString() === id);
-      };
-
-      const emp = fetchEmployee(id);
-      if (emp) {
-        setEmployee(emp);
-      }
-    }
-  }, [id]);
-
-  const handleSave = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Implement save logic here, e.g., making an API call to save the updated employee data
-    console.log('Employee data saved:', employee);
-    navigate('/employees'); // Navigate back to the employee list after saving
+  const [employee, setEmployee] = useState<Employee>();
+  type Employee = {
+    id?: number;
+    name?: string;
+    sex?: string | null;
+    dob?: string;
+    country?: string;
+    phone?: string;
+    email?: string;
+    startDate?: string;
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = event.target;
-    setEmployee((prev: any) => ({ ...prev, [name]: value }));
+  const getEmployee = async () => {
+    const result = await axios.get(`http://localhost:5000/employees/${id}`);
+    setEmployee(result.data);
   };
 
-  if (!employee) {
-    return <div>Loading...</div>;
+  const handleChange = (e: any) => {
+    setEmployee({ ...employee, [e.target.name]: e.target.value });
   }
+
+  React.useEffect(() => {
+    getEmployee();
+  }, []);
+
+  const handleSave = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await axios.put(`http://localhost:5000/employees/${id}`, employee);
+    navigate('/employees'); // Navigate back to the employee list after saving
+    Swal.fire(
+      'Thành công!',
+      'Cập nhật nhân viên thành công.',
+      'success'
+    )
+  };
+
+  // if (!employee) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <section>
-      <h1 className="text-center text-dark">Chỉnh Sửa Thông Tin</h1>
+      <h1 className="text-center text-dark">Chỉnh Sửa Thông Tin Nhân viên</h1>
 
       <div className="container-fluid col-8">
         <div className="row">
@@ -50,60 +56,61 @@ const EditEmployee = () => {
             <form onSubmit={handleSave}>
               <div className="mb-3 d-flex align-items-center">
                 <label className="form-label col-3" htmlFor="name">Họ và tên:</label>
-                <p className="form-control" style={{ borderRadius: "5px", backgroundColor: "#e9ecef" }}>
-                  {employee.name}
-                </p>
+                <input className="form-control" name='name' value={employee?.name} />
               </div>
 
               <div className="mb-3 d-flex align-items-center">
                 <label className="form-label col-3">Giới tính:</label>
                 <div className="form-check form-check-inline">
-                  <input className="form-check-input mt-1" type="radio" name="gender" id="male" value="Nam" checked={employee.gender === 'Nam'} onChange={handleChange} />
                   <label className="form-check-label" htmlFor="male">Nam</label>
+                  {/* {employee?.sex === 'Nam' && ( */}
+                    <input className="form-check-input mt-1" type="radio" name="sex" id="sex" value="Nam" checked={employee?.sex === 'Nam'} onChange={e => handleChange(e)} />
+                  {/* // )} */}
                 </div>
                 <div className="form-check form-check-inline">
-                  <input className="form-check-input mt-1" type="radio" name="gender" id="female" value="Nữ" checked={employee.gender === 'Nữ'} onChange={handleChange} />
+                  <input className="form-check-input mt-1" type="radio" name="sex" id="sex" value="Nữ" checked={employee?.sex === 'Nữ'} onChange={e => handleChange(e)} />
                   <label className="form-check-label" htmlFor="female">Nữ</label>
                 </div>
               </div>
 
               <div className="mb-3 d-flex align-items-center">
                 <label className="form-label col-3" htmlFor="birthDate">Ngày sinh:</label>
-                <input className="form-control" type="date" name="birthDate" id="birthDate" value={employee.birthDate} onChange={handleChange} style={{ borderRadius: "5px" }} />
+                <input className="form-control" type="date" name="birthDate" id="birthDate" value={employee?.dob} onChange={e => handleChange(e)} style={{ borderRadius: "5px" }} />
               </div>
 
               <div className="mb-3 d-flex align-items-center">
-                <label className="form-label col-3" htmlFor="hometown">Quê quán:</label>
-                <input className="form-control" type="text" name="hometown" id="hometown" value={employee.hometown} onChange={handleChange} style={{ borderRadius: "5px" }} />
+                <label className="form-label col-3" htmlFor="country">Quê quán:</label>
+                <input className="form-control" type="text" name="country" id="country" value={employee?.country} onChange={e => handleChange(e)} style={{ borderRadius: "5px" }} />
               </div>
 
               <div className="mb-3 d-flex align-items-center">
-                <label className="form-label col-3" htmlFor="phoneNumber">Số điện thoại:</label>
-                <input className="form-control" type="tel" name="phoneNumber" id="phoneNumber" value={employee.phoneNumber} onChange={handleChange} style={{ borderRadius: "5px" }} />
+                <label className="form-label col-3" htmlFor="phone">Số điện thoại:</label>
+                <input className="form-control" type="tel" name="phone" id="phone" value={employee?.phone} onChange={e => handleChange(e)} style={{ borderRadius: "5px" }} />
               </div>
 
               <div className="mb-3 d-flex align-items-center">
-                <label className="form-label col-3" htmlFor="employeeId">Mã nhân viên:</label>
-                <input className="form-control" type="text" name="employeeId" id="employeeId" value={employee.employeeId} onChange={handleChange} style={{ borderRadius: "5px" }} />
+                <label className="form-label col-3" htmlFor="email">Số điện thoại:</label>
+                <input className="form-control" type="tel" name="email" id="email" value={employee?.email} onChange={e => handleChange(e)} style={{ borderRadius: "5px" }} />
               </div>
 
               <div className="mb-3 d-flex align-items-center">
                 <label className="form-label col-3" htmlFor="startDate">Ngày bắt đầu:</label>
-                <input className="form-control" type="date" name="startDate" id="startDate" value={employee.startDate} onChange={handleChange} style={{ borderRadius: "5px" }} />
+                <input className="form-control" type="date" name="startDate" id="startDate" value={employee?.startDate} onChange={e => handleChange(e)} style={{ borderRadius: "5px" }} />
               </div>
 
               <div className="form-group float-end">
-                <button type="button" className="btn btn-secondary me-2" style={{ 
+                <Link to={"/employees"} type="button" className="btn btn-secondary me-2" style={{ 
                   borderRadius: '10px', 
-                  backgroundColor: 'red', 
+                  // backgroundColor: 'red', 
                   border: '2px solid', 
                   padding: '8px 16px', 
                   fontSize: '16px',  
                   fontWeight: 'bold'  
-                }} onClick={() => navigate('/employees')}>Quay lại</button>
+                }}>Quay lại</Link>
+
                 <button type="submit" className="btn btn-primary" style={{ 
                   borderRadius: '10px', 
-                  backgroundColor: 'blue', 
+                  // backgroundColor: 'blue', 
                   border: '2px solid', 
                   padding: '8px 16px', 
                   fontSize: '16px',  
