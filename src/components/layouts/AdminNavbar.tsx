@@ -30,7 +30,7 @@ const AdminNavbar = () => {
                             </div>
                         </div> */}
                         <Link to="foods" className={`nav-item nav-link ${foodActive ? 'active' : ''}`}>Món ăn</Link>
-                        <div className="nav-item dropdown">
+                        {/* <div className="nav-item dropdown">
                             <a href="" className="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i className="fa-solid fa-user"></i></a>
                             <div className="dropdown-menu m-0">
                                 <Link to="/employees" className="dropdown-item">Khu vực quản trị</Link>
@@ -38,7 +38,18 @@ const AdminNavbar = () => {
                                 <Link to="/employees" className="dropdown-item">Khu vực quản trị</Link>
                                 <Link to="/employees" className="dropdown-item">Đăng xuất</Link>
                             </div>
+                        </div> */}
+                        <div className="nav-item dropdown ms-3" >
+                        <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i className="fa-solid fa-user" ></i>
+                        </a>
+                        <div className="dropdown-menu dropdown-menu-end"style={{top: '80%'}}>
+                        <Link to="/employees" className="dropdown-item">Khu vực quản trị</Link>
+                                <Link to="/branches" className="dropdown-item">Khu vực quản trị chi nhánh</Link>
+                                <Link to="/employees" className="dropdown-item">Khu vực quản trị</Link>
+                                <Link to="/employees" className="dropdown-item">Đăng xuất</Link>
                         </div>
+                    </div>
                     </div>
                 </div>
             </nav>
