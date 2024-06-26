@@ -52,6 +52,9 @@ const BookingIndex = () => {
                                           <option value="1">Một người</option>
                                           <option value="2">Hai người</option>
                                           <option value="3">Ba người</option>
+                                            <option value="4">Bốn người</option>
+                                            <option value="5">Năm người</option>
+                                            <option value="6">Sáu người</option>
                                         </select>
                                         <label htmlFor="select1">Số lượng người</label>
                                       </div>

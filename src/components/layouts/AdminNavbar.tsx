@@ -6,6 +6,8 @@ const AdminNavbar = () => {
     const employeeActive = location.pathname.startsWith('/employees');
     const foodActive = location.pathname.startsWith('/foods'); 
     const branchActive = location.pathname.startsWith('/branches');    
+    const statisticalActive = location.pathname.startsWith('/statistical');
+    const scheduleActive = location.pathname.startsWith('/schedule');
 
   return (
     <div className="container-xxl position-relative p-0">
@@ -20,9 +22,15 @@ const AdminNavbar = () => {
                     <div className="navbar-nav ms-auto py-0 pe-4">
                         <Link to="/home" className="nav-item nav-link">Trang chủ</Link>
 
-
-                        <Link to="/employees" className={`nav-item nav-link ${employeeActive ? 'active' : ''}`}>Nhân viên</Link>
+                        <div className="nav-item dropdown">
+                            <Link to="/employees" className={`nav-item nav-link ${employeeActive ? 'active' : ''}`}>Nhân viên</Link>
+                            <div className="dropdown-menu m-0">
+                                <Link to="/schedule" className={`dropdown-item ${scheduleActive ? 'active' : ''}`}>Lịch làm việc</Link>
+                            </div>
+                        </div>
+                        
                         <Link to="/branches" className={`nav-item nav-link ${branchActive ? 'active' : ''}`}>Chi nhánh</Link>
+                        <Link to={"/statistical"} className={`nav-item nav-link ${statisticalActive ? 'active' : ''}`}>Thống kê</Link>
                         {/* <div className="nav-item dropdown">
                             <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Khu vực</a>
                             <div className="dropdown-menu m-0">
@@ -35,10 +43,7 @@ const AdminNavbar = () => {
                         <div className="nav-item dropdown">
                             <a href="" className="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i className="fa-solid fa-user"></i></a>
                             <div className="dropdown-menu m-0">
-                                <Link to="/employees" className="dropdown-item">Khu vực quản trị</Link>
-                                <Link to="/branches" className="dropdown-item">Khu vực quản trị chi nhánh</Link>
-                                <Link to="/employees" className="dropdown-item">Khu vực quản trị</Link>
-                                <Link to="/employees" className="dropdown-item">Đăng xuất</Link>
+                                <Link to="/home" className="dropdown-item">Đăng xuất</Link>
                             </div>
                         </div>
                     </div>

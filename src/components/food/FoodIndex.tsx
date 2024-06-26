@@ -15,6 +15,7 @@ const FoodIndex = () => {
     };
 
     const [foods, setFoods] = React.useState<Food[]>([]);
+    const [search, setSearch] = React.useState<string>('');
 
     const loadFoods = async () => {
         const result = await axios.get('http://localhost:5000/foods');
@@ -31,7 +32,8 @@ const FoodIndex = () => {
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
-              confirmButtonText: 'Có, xóa nó!'
+              confirmButtonText: 'Có, xóa nó!',
+            cancelButtonText: 'Hủy'
             }).then((result) => {
               if (result.isConfirmed) {
                 axios.delete(`http://localhost:5000/foods/${id}`);
@@ -47,6 +49,17 @@ const FoodIndex = () => {
           }
     };
 
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+    };
+
+    const filteredFoods = foods.filter((food) =>
+        (food.name.toLowerCase().includes(search.toLowerCase())) ||
+        (food.price.toString().includes(search.toLowerCase()))
+    );
+    
+    console.log("filteredFoods", filteredFoods);
+
     React.useEffect(() => {
         loadFoods();
     }, []);
@@ -61,6 +74,12 @@ const FoodIndex = () => {
                                 <h3>Danh sách món ăn</h3>
                             </div>
                             <div className="col-md-6">
+                                <input type="search" name="" id="" 
+                                placeholder='Tìm kiếm' 
+                                className='col-md-8 mt-1'
+                                value={search}
+                                onChange={handleSearchChange}/>
+
                                 <Link to="/foods/create" className="btn btn-primary float-end">Thêm mới</Link>
                             </div>
                         </div>
@@ -80,7 +99,7 @@ const FoodIndex = () => {
 
                             <tbody >
                                 {
-                                    foods.map((food, index) => (
+                                    filteredFoods.map((food, index) => (
                                         <tr key={food.id}>
                                         <td className="text-center align-middle">{index+1}</td>
                                         <td className="text-center align-middle">{food.name}</td>
@@ -89,9 +108,8 @@ const FoodIndex = () => {
                                             <img src={food.img} style={{ width: 70, height: 70, marginLeft: '20%', borderRadius: '50%' }} alt="Img" />
                                         </td>
                                         <td className="text-center align-middle">
-                                            <a href=""><i className="fa-solid fa-eye"></i></a>
                                             <Link to={`/foods/edit/${food.id}`}><i className="fa-solid fa-pen-to-square"></i></Link>
-                                            <a href="#" onClick={handleDelete(food.id)} data-toggle="modal" data-target="#A{{ $user->id }}"><i className="fa-solid fa-solid fa-trash"></i></a>
+                                            <a href="#" onClick={handleDelete(food.id)} data-toggle="modal" data-target="#A{{ $user->id }}"><i className="fa-solid fa-solid fa-trash ms-2"></i></a>
                                         </td>
                                     </tr>
                                     ))

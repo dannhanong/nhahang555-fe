@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import External from '../layouts/External';
 
 const EmployeeIndex = () => {
   type Employee = {
@@ -17,6 +18,7 @@ const EmployeeIndex = () => {
   };
 
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [search, setSearch] = useState<string>('');
 
   const loadEmployees = async () => {
     const result = await axios.get('http://localhost:5000/employees');
@@ -29,7 +31,7 @@ const EmployeeIndex = () => {
 
   const handleDelete = (id: number) => {
     return (event: any) => {
-      event.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
+      event.preventDefault();
       Swal.fire({
         title: 'Bạn có chắc chắn?',
         text: "Bạn sẽ không thể hoàn tác!",
@@ -37,7 +39,8 @@ const EmployeeIndex = () => {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Có, hãy xóa!'
+        confirmButtonText: 'Có, hãy xóa!',
+        cancelButtonText: 'Hủy'
       }).then((result) => {
         if (result.isConfirmed) {
           axios.delete(`http://localhost:5000/employees/${id}`);
@@ -52,22 +55,40 @@ const EmployeeIndex = () => {
     }
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const filteredEmployees = employees.filter((employee) => 
+    (employee.name?.toLowerCase().includes(search.toLowerCase())) ||
+    (employee.country?.toLowerCase().includes(search.toLowerCase())) ||
+    (employee.phone?.toLowerCase().includes(search.toLowerCase())) ||
+    (employee.email?.toLowerCase().includes(search.toLowerCase()))
+  );
+
   return (
     <div className="container mt-4">
       <div className="card container">
         <div className="card-header">
-          <h3>Danh Sách Nhân Sự</h3>
+          <div className="row">
+            <div className="col-md-6">
+              <h3>Danh Sách Nhân Sự</h3>
+            </div>
+            <div className="col-md-6">
+                <input type="search" name="" id="" 
+                placeholder='Tìm kiếm' 
+                className='col-md-8 mt-1'
+                value={search}
+                onChange={handleSearchChange}/>
+                <Link to="/employees/create" className="btn btn-primary float-end">Thêm mới</Link>
+            </div>
+          </div>
         </div>
         <div className="card-body">
           <div className="mb-3 d-flex justify-content-between">
-            <div>
-              <button className="btn btn-info me-2" style={{ borderRadius: '8px' }}>Copy</button>
-              <button className="btn btn-success me-2" style={{ borderRadius: '8px' }}>CSV</button>
-              <button className="btn btn-danger me-2" style={{ borderRadius: '8px' }}>PDF</button>
-            </div>
-            <div>
-              <Link to={"/employees/create"} className="btn btn-primary float-end" style={{ borderRadius: '8px' }}>Thêm</Link>
-              <button className="btn btn-secondary ms-2" style={{ borderRadius: '8px' }}>Lọc</button>
+            <External />
+            <div className='float-end mt-2'>
+              <Link to={'/schedule'} className='text text-info text-decoration-none'>Lịch làm việc</Link>
             </div>
           </div>
           <table className="table table-bordered">
@@ -85,7 +106,7 @@ const EmployeeIndex = () => {
               </tr>
             </thead>
             <tbody>
-              {employees.map((employee, index) => (
+              {filteredEmployees.map((employee, index) => (
                 <tr key={employee.id}>
                   <td className="text-center align-middle">{index + 1}</td>
                   <td className="text-center align-middle">{employee.name}</td>
@@ -96,9 +117,8 @@ const EmployeeIndex = () => {
                   <td className="text-center align-middle">{employee.email}</td>
                   <td className="text-center align-middle">{employee.startDate}</td>
                   <td className="text-center align-middle">
-                      <a href=""><i className="fa-solid fa-eye"></i></a>
                       <Link to={`/employees/edit/${employee.id}`}><i className="fa-solid fa-pen-to-square"></i></Link>
-                      <a href="#" onClick={handleDelete(employee.id)} data-toggle="modal"><i className="fa-solid fa-solid fa-trash"></i></a>
+                      <a href="#" onClick={handleDelete(employee.id)} data-toggle="modal"><i className="fa-solid fa-solid fa-trash ms-2"></i></a>
                   </td>
                 </tr>
               ))}

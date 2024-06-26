@@ -91,7 +91,7 @@ const AddEmployee = () => {
 
               <div className="form-group float-end">
                 <Link to={"/employees"} type="button" className="btn btn-secondary me-2" style={{ 
-                borderRadius: '10px', 
+                borderRadius: '5px', 
                 // backgroundColor: 'red', 
                 border: '2px solid', 
                 padding: '8px 16px', 
@@ -100,14 +100,14 @@ const AddEmployee = () => {
                 }}>Quay lại</Link>
 
                 <button type="submit" className="btn btn-primary" style={{ 
-                borderRadius: '10px', 
+                borderRadius: '5px', 
                 // backgroundColor: 'blue', 
                 border: '2px solid', 
                 padding: '8px 16px', 
                 fontSize: '16px',  
                 fontWeight: 'bold'  
                 }}>Lưu</button>
-            </div>
+              </div>
             </form>
           </div>
         </div>

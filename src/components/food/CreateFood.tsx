@@ -87,7 +87,7 @@ const CreateFood = () => {
 
                             <div className="form-group float-end">
                                 <Link to={"/foods"} type="button" className="btn btn-secondary me-2" style={{ 
-                                borderRadius: '10px', 
+                                borderRadius: '5px', 
                                 // backgroundColor: 'red', 
                                 border: '2px solid', 
                                 padding: '8px 16px', 
@@ -96,7 +96,7 @@ const CreateFood = () => {
                                 }}>Quay lại</Link>
 
                                 <button type="submit" className="btn btn-primary" style={{ 
-                                borderRadius: '10px', 
+                                borderRadius: '5px', 
                                 // backgroundColor: 'blue', 
                                 border: '2px solid', 
                                 padding: '8px 16px', 

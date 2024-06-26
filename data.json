@@ -92,38 +92,32 @@
     {
       "month": "01",
       "revenue": 10000000,
-      "expense": 5000000,
-      "id": "44bf"
+      "expense": 5000000
     },
     {
       "month": "02",
       "revenue": 10000000,
-      "expense": 4000000,
-      "id": "d347"
+      "expense": 4000000
     },
     {
       "month": "03",
       "revenue": 20000000,
-      "expense": 4000000,
-      "id": "3ba9"
+      "expense": 4000000
     },
     {
       "month": "04",
       "revenue": 15000000,
-      "expense": 8000000,
-      "id": "ea0f"
+      "expense": 8000000
     },
     {
       "month": "05",
       "revenue": 20000000,
-      "expense": 1000000,
-      "id": "7a4b"
+      "expense": 1000000
     },
     {
       "month": "06",
       "revenue": 30000000,
-      "expense": 2000000,
-      "id": "f898"
+      "expense": 2000000
     }
   ]
 }

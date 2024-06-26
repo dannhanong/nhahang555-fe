@@ -23,13 +23,15 @@ import { BranchIndex } from './components/branches/BranchIndex';
 import { CreateBranch } from './components/branches/CreateBranch';
 import { EditBranch } from './components/branches/EditBranch';
 import { DeleteBranch } from './components/branches/DeleteBranch'
+import StatisticalIndex from './components/statistical/StatisticalIndex';
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
   useEffect(() => {
     const path = location.pathname;
-      if (path.startsWith('/employees') || path.startsWith('/foods')){
+      if (path.startsWith('/employees') || path.startsWith('/foods') || path.startsWith('/branches') || path.startsWith('/statistical')
+      || path.startsWith('/schedule')){
         setIsAdmin(true);
       }
       else {
@@ -57,8 +59,8 @@ function App() {
         <Route path="branches/create" element={<CreateBranch />} />
         <Route path="branches/edit/:id" element={<EditBranch />} />
         <Route path="branches/delete" element={<DeleteBranch />} />
-        
-
+        <Route path="/" element={<Header />} />
+        <Route path='/statistical' element={<StatisticalIndex />} />
       </Routes>
       <Footer />
     </div>

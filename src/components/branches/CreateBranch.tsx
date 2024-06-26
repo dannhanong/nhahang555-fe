@@ -61,9 +61,24 @@ export const CreateBranch = () => {
                                 <label className="input-group-text" htmlFor="">Địa chỉ:</label>
                                 <input className="form-control" type="text" name="address" id="" value={branch.address} onChange={e => handleChage(e)} />
                             </div>
-                            <div className="form-group  float-end ">
-                                <Link to="/branches"  className="btn btn-secondary ">Back </Link>
-                                <input type="submit" value="Create" className="btn btn-primary" name="btAdd" />
+                            <div className="form-group float-end">
+                                <Link to={"/branches"} type="button" className="btn btn-secondary me-2" style={{ 
+                                borderRadius: '5px', 
+                                // backgroundColor: 'red', 
+                                border: '2px solid', 
+                                padding: '8px 16px', 
+                                fontSize: '16px',  
+                                fontWeight: 'bold'  
+                                }}>Quay lại</Link>
+
+                                <button type="submit" className="btn btn-primary" style={{ 
+                                borderRadius: '5px', 
+                                // backgroundColor: 'blue', 
+                                border: '2px solid', 
+                                padding: '8px 16px', 
+                                fontSize: '16px',  
+                                fontWeight: 'bold'  
+                                }}>Lưu</button>
                             </div>
                         </form>
                     </div>
